@@ -33,6 +33,69 @@ import SwiftUI
     return hv
 }
 
+// MARK: - Manual window drag
+//
+// macOS 27 regression: AppKit no longer initiates a background window drag
+// (`isMovableByWindowBackground`) when the hit view is a SwiftUI `NSHostingView`
+// (confirmed on 27.0 / 26A428; works fine on macOS 13–26). `panel.isMovableByWindowBackground`
+// is kept for older systems, but the visible grip below drives the move manually by
+// tracking mouse deltas and calling `setFrameOrigin` directly, which is unaffected by the regression.
+
+@MainActor
+private final class WindowDragTracker {
+    private var initialMouseLocation: NSPoint?
+    private var initialWindowOrigin: NSPoint?
+
+    func mouseDown(in view: NSView) {
+        initialMouseLocation = NSEvent.mouseLocation
+        initialWindowOrigin = view.window?.frame.origin
+    }
+
+    func mouseDragged(in view: NSView) {
+        guard let startMouse = initialMouseLocation,
+              let startOrigin = initialWindowOrigin,
+              let window = view.window else { return }
+        let current = NSEvent.mouseLocation
+        window.setFrameOrigin(NSPoint(
+            x: startOrigin.x + (current.x - startMouse.x),
+            y: startOrigin.y + (current.y - startMouse.y)
+        ))
+    }
+
+    func mouseUp() {
+        initialMouseLocation = nil
+        initialWindowOrigin = nil
+    }
+}
+
+@MainActor
+private final class DragHandleNSView: NSView {
+    private let tracker = WindowDragTracker()
+
+    override func mouseDown(with event: NSEvent) { tracker.mouseDown(in: self) }
+    override func mouseDragged(with event: NSEvent) { tracker.mouseDragged(in: self) }
+    override func mouseUp(with event: NSEvent) { tracker.mouseUp() }
+}
+
+/// Visible grip bar: drag anywhere on it to move the panel.
+struct WindowDragHandle: View {
+    var body: some View {
+        DragHandleRepresentable()
+            .frame(height: 16)
+            .overlay {
+                Capsule()
+                    .fill(.white.opacity(0.25))
+                    .frame(width: 36, height: 4)
+                    .allowsHitTesting(false)
+            }
+    }
+}
+
+private struct DragHandleRepresentable: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView { DragHandleNSView() }
+    func updateNSView(_ nsView: NSView, context: Context) {}
+}
+
 // MARK: - Panel factories used by AppDelegate
 
 @MainActor func makeOriginalPanel(above referenceFrame: NSRect) -> NSPanel {
@@ -70,6 +133,22 @@ struct OriginalTextView: View {
     private var hasContent: Bool { !engine.subtitleLines.isEmpty || !engine.originalPartial.isEmpty }
 
     var body: some View {
+        VStack(spacing: 0) {
+            WindowDragHandle()
+            originalScrollView
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.black.opacity(0.65))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(.white.opacity(0.08), lineWidth: 1)
+                }
+        }
+        .padding(8)
+    }
+
+    private var originalScrollView: some View {
         ScrollViewReader { proxy in
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(alignment: .leading, spacing: 2) {
@@ -126,15 +205,6 @@ struct OriginalTextView: View {
             }
             .scrollDisabled(!engine.allowUserScroll)
         }
-        .background {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(.black.opacity(0.65))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10)
-                        .strokeBorder(.white.opacity(0.08), lineWidth: 1)
-                }
-        }
-        .padding(8)
     }
 }
 
@@ -146,6 +216,23 @@ struct TranslationTextView: View {
     private var isIdle: Bool { !engine.isRunning && engine.subtitleLines.isEmpty }
 
     var body: some View {
+        VStack(spacing: 0) {
+            WindowDragHandle()
+            translationScrollView
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 14)
+                .fill(.black.opacity(isIdle ? 0.55 : 0.78))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 14)
+                        .strokeBorder(.white.opacity(isIdle ? 0.08 : 0), lineWidth: 1)
+                }
+        }
+        .padding(10)
+        .animation(.easeInOut(duration: 0.2), value: isIdle)
+    }
+
+    private var translationScrollView: some View {
         ScrollViewReader { proxy in
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 4) {
@@ -180,15 +267,5 @@ struct TranslationTextView: View {
             withAnimation { proxy.scrollTo("tl-bottom", anchor: .bottom) }
         }
         } // ScrollViewReader
-        .background {
-            RoundedRectangle(cornerRadius: 14)
-                .fill(.black.opacity(isIdle ? 0.55 : 0.78))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 14)
-                        .strokeBorder(.white.opacity(isIdle ? 0.08 : 0), lineWidth: 1)
-                }
-        }
-        .padding(10)
-        .animation(.easeInOut(duration: 0.2), value: isIdle)
     }
 }

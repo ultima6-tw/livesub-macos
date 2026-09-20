@@ -48,8 +48,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: tw.ultima6.jasub
-        MARKETING_VERSION: "0.3.9"
-        CURRENT_PROJECT_VERSION: 12
+        MARKETING_VERSION: "0.3.10"
+        CURRENT_PROJECT_VERSION: 13
         MACOSX_DEPLOYMENT_TARGET: "26.4"
         SWIFT_VERSION: "6.0"
         INFOPLIST_FILE: Resources/Info.plist
