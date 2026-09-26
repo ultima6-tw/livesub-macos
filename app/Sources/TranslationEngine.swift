@@ -31,6 +31,20 @@ struct SubtitleLine: Identifiable, Sendable {
     var translated: String?   // nil = still translating
 }
 
+/// Raw scroll-view geometry (from `onScrollGeometryChange`), exposed via the
+/// DEBUG-only debug API so scroll-to-bottom behavior can be verified without
+/// screen capture. `atBottom` uses a small tolerance for layout rounding.
+struct ScrollMetrics: Equatable, Codable {
+    var offsetY: Double = 0
+    var containerHeight: Double = 0
+    var contentHeight: Double = 0
+    // Tolerance covers TranslationTextView's trailing `.padding(.vertical, 12)`,
+    // which is always "missing" from a strict measurement even when scrolled
+    // all the way to the last line of actual text (confirmed empirically:
+    // the gap stays pinned at exactly 12pt regardless of content length).
+    var atBottom: Bool { offsetY + containerHeight >= contentHeight - 14 }
+}
+
 // MARK: - Engine
 
 @available(macOS 26.4, *)
@@ -97,7 +111,15 @@ final class TranslationEngine: ObservableObject {
         let saved = UserDefaults.standard.double(forKey: "jasub.translationFontSize")
         return saved >= 12 ? CGFloat(saved) : 20
     }()
+    @Published var terminologyGlossaryText: String = UserDefaults.standard.string(forKey: "jasub.terminologyGlossaryText") ?? "" {
+        didSet {
+            UserDefaults.standard.set(terminologyGlossaryText, forKey: "jasub.terminologyGlossaryText")
+            terminologyCorrector.glossary = terminologyGlossaryText.components(separatedBy: .newlines)
+        }
+    }
     @Published var originalPartial: String = ""
+    @Published var originalScrollMetrics = ScrollMetrics()
+    @Published var translationScrollMetrics = ScrollMetrics()
     @Published var subtitleLines: [SubtitleLine] = []
 
     // MARK: Private
@@ -140,6 +162,10 @@ final class TranslationEngine: ObservableObject {
     private var sampleStreamContinuation: AsyncStream<[Float]>.Continuation?
     private var pipelineTask: Task<Void, Never>?
     private var hallucinationFilter = HallucinationFilter()
+    private var terminologyCorrector = TerminologyCorrector(
+        glossary: (UserDefaults.standard.string(forKey: "jasub.terminologyGlossaryText") ?? "")
+            .components(separatedBy: .newlines)
+    )
 
     // MARK: Logging
 
@@ -487,16 +513,17 @@ final class TranslationEngine: ObservableObject {
                     guard let self else { return }
                     self.lastASRActivity = .now
                     self.isASRSilent = false
-                    self.originalPartial = text
+                    self.originalPartial = self.terminologyCorrector.correct(text)
                 }
             }
 
-            await asr.setOnFinal { [weak self] text in
+            await asr.setOnFinal { [weak self] rawText in
                 Task {
-                    let lineID: Int? = await MainActor.run { () -> Int? in
+                    let line: (id: Int, text: String)? = await MainActor.run { () -> (id: Int, text: String)? in
                         guard let self else { return nil }
                         self.lastASRActivity = .now
                         self.isASRSilent = false
+                        let text = self.terminologyCorrector.correct(rawText)
                         guard !self.hallucinationFilter.isHallucination(text) else { return nil }
                         if self.hallucinationFilter.isDuplicateAndRecord(text) { return nil }
                         self.originalPartial = ""
@@ -508,13 +535,16 @@ final class TranslationEngine: ObservableObject {
                         if let data = (text + "\n").data(using: .utf8) {
                             self.logFileHandle?.write(data)
                         }
-                        return id
+                        return (id, text)
                     }
-                    guard let lineID else { return }
+                    guard let (lineID, text) = line else { return }
 
                     let strategy: TranslationSession.Strategy = capturedHighFidelity ? .highFidelity : .lowLatency
                     let (translated, usedFallback) = await translator.translate(text, from: translSrc, to: tgtID, strategy: strategy)
-                    let result = translated.isEmpty ? "⚠️ \(text)" : translated
+                    let overridden = await MainActor.run { [weak self] in
+                        self?.terminologyCorrector.applyTranslationOverrides(to: translated) ?? translated
+                    }
+                    let result = overridden.isEmpty ? "⚠️ \(text)" : overridden
                     await MainActor.run { [weak self] in
                         guard let self else { return }
                         guard let idx = self.subtitleLines.firstIndex(where: { $0.id == lineID }) else { return }

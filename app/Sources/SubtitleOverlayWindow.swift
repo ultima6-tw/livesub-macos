@@ -203,6 +203,13 @@ struct OriginalTextView: View {
                 guard !engine.allowUserScroll, let lastID = engine.subtitleLines.last?.id else { return }
                 withAnimation { proxy.scrollTo("or-\(lastID)", anchor: .bottom) }
             }
+            .onScrollGeometryChange(for: ScrollMetrics.self) { geometry in
+                ScrollMetrics(offsetY: geometry.contentOffset.y,
+                              containerHeight: geometry.containerSize.height,
+                              contentHeight: geometry.contentSize.height)
+            } action: { _, metrics in
+                engine.originalScrollMetrics = metrics
+            }
             .scrollDisabled(!engine.allowUserScroll)
         }
     }
@@ -265,6 +272,22 @@ struct TranslationTextView: View {
         .onChange(of: engine.subtitleLines.count) { _, _ in
             guard !engine.allowUserScroll else { return }
             withAnimation { proxy.scrollTo("tl-bottom", anchor: .bottom) }
+        }
+        // The translated text for the last line arrives *after* it's appended
+        // (subtitleLines[idx].translated = result, mutating in place) — that
+        // doesn't change `.count`, so without this the view never re-scrolls
+        // when the (often much longer) translation fills in, leaving it
+        // clipped below the visible window until scrolled manually.
+        .onChange(of: engine.subtitleLines.last?.translated) { _, _ in
+            guard !engine.allowUserScroll else { return }
+            withAnimation { proxy.scrollTo("tl-bottom", anchor: .bottom) }
+        }
+        .onScrollGeometryChange(for: ScrollMetrics.self) { geometry in
+            ScrollMetrics(offsetY: geometry.contentOffset.y,
+                          containerHeight: geometry.containerSize.height,
+                          contentHeight: geometry.contentSize.height)
+        } action: { _, metrics in
+            engine.translationScrollMetrics = metrics
         }
         } // ScrollViewReader
     }

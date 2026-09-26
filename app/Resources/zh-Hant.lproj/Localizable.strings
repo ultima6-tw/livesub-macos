@@ -40,6 +40,12 @@
 "Stop" = "停止";
 "Log Folder" = "記錄資料夾";
 "Quit JaSub" = "結束 JaSub";
+"Manage Terminology…" = "管理術語表…";
+
+/* Terminology glossary sheet */
+"Terminology Glossary" = "術語校正表";
+"One term per line, e.g. \"Max Verstappen\" — ASR output is fuzzy-corrected against this list. Add \" = translation\" to also force that term's translated form, e.g. \"Max Verstappen = 麥克斯·維斯塔潘\" (only takes effect if the translator leaves it untranslated)." = "一行一個詞彙，例如「Max Verstappen」——語音辨識結果會用這份清單模糊校正。加上「 = 翻譯」可以額外強制指定翻譯結果，例如「Max Verstappen = 麥克斯·維斯塔潘」（只有在翻譯引擎沒有把原文翻掉時才會生效）。";
+"Done" = "完成";
 
 /* Subtitle overlay */
 "⟳ Listening" = "⟳ 聆聽中";

@@ -3,6 +3,7 @@ import AppKit
 
 struct MenuBarView: View {
     @StateObject private var engine = TranslationEngine.shared
+    @State private var showingTerminologySheet = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -126,6 +127,17 @@ struct MenuBarView: View {
             Toggle("Diagnostic Logging", isOn: $engine.diagnosticLogging)
                 .toggleStyle(.checkbox)
 
+            Button {
+                showingTerminologySheet = true
+            } label: {
+                Label("Manage Terminology…", systemImage: "textformat.abc")
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(Color.accentColor)
+            .sheet(isPresented: $showingTerminologySheet) {
+                TerminologySheet(text: $engine.terminologyGlossaryText)
+            }
+
             Toggle("High Quality Translation", isOn: $engine.highFidelityTranslation)
                 .toggleStyle(.checkbox)
             if engine.highFidelityTranslation {
@@ -243,5 +255,33 @@ struct MenuBarView: View {
         let dir  = docs.appendingPathComponent("JaSub", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         NSWorkspace.shared.open(dir)
+    }
+}
+
+private struct TerminologySheet: View {
+    @Binding var text: String
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Terminology Glossary").font(.headline)
+            Text("One term per line, e.g. \"Max Verstappen\" — ASR output is fuzzy-corrected against this list. Add \" = translation\" to also force that term's translated form, e.g. \"Max Verstappen = 麥克斯·維斯塔潘\" (only takes effect if the translator leaves it untranslated).")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            TextEditor(text: $text)
+                .font(.system(.body, design: .monospaced))
+                .frame(minWidth: 320, minHeight: 220)
+                .overlay(RoundedRectangle(cornerRadius: 6).stroke(.separator))
+
+            HStack {
+                Spacer()
+                Button("Done") { dismiss() }
+                    .buttonStyle(.borderedProminent)
+                    .keyboardShortcut(.return)
+            }
+        }
+        .padding(16)
     }
 }
