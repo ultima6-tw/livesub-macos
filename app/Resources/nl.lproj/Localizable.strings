@@ -53,3 +53,8 @@
 "Installed" = "Geïnstalleerd";
 "Not installed" = "Niet geïnstalleerd";
 "Tap Start to begin" = "Tik op Starten om te beginnen";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Vertaling voorlezen via koptelefoon";
+"Headphones detected" = "Koptelefoon gedetecteerd";
+"No headphones — silent" = "Geen koptelefoon — stil";

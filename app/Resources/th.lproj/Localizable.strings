@@ -53,3 +53,8 @@
 "Installed" = "ติดตั้งแล้ว";
 "Not installed" = "ยังไม่ได้ติดตั้ง";
 "Tap Start to begin" = "แตะ เริ่ม เพื่อเริ่มต้น";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "อ่านคำแปลออกทางหูฟัง";
+"Headphones detected" = "ตรวจพบหูฟัง";
+"No headphones — silent" = "ไม่มีหูฟัง — ปิดเสียง";

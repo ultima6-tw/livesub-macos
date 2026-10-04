@@ -53,3 +53,8 @@
 "Installed" = "Installé";
 "Not installed" = "Non installé";
 "Tap Start to begin" = "Appuyez sur Démarrer pour commencer";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Lire la traduction au casque";
+"Headphones detected" = "Casque détecté";
+"No headphones — silent" = "Pas de casque — silencieux";

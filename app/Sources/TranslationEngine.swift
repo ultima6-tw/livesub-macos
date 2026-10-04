@@ -153,6 +153,8 @@ final class TranslationEngine: ObservableObject {
     private var lastASRActivity: Date = .distantPast
     private var silenceTimer: Timer?
     private var nextLineID = 0
+    /// First partial of the sentence currently being spoken (latency measurement)
+    private var sentenceFirstPartialAt: Date?
 
     // MARK: Pipeline
 
@@ -513,14 +515,18 @@ final class TranslationEngine: ObservableObject {
                     guard let self else { return }
                     self.lastASRActivity = .now
                     self.isASRSilent = false
+                    if self.sentenceFirstPartialAt == nil { self.sentenceFirstPartialAt = Date() }
                     self.originalPartial = self.terminologyCorrector.correct(text)
                 }
             }
 
             await asr.setOnFinal { [weak self] rawText in
                 Task {
-                    let line: (id: Int, text: String)? = await MainActor.run { () -> (id: Int, text: String)? in
+                    let line: (id: Int, text: String, firstPartialAt: Date?, finalAt: Date)? = await MainActor.run { () -> (id: Int, text: String, firstPartialAt: Date?, finalAt: Date)? in
                         guard let self else { return nil }
+                        let firstPartialAt = self.sentenceFirstPartialAt
+                        self.sentenceFirstPartialAt = nil
+                        let finalAt = Date()
                         self.lastASRActivity = .now
                         self.isASRSilent = false
                         let text = self.terminologyCorrector.correct(rawText)
@@ -535,9 +541,9 @@ final class TranslationEngine: ObservableObject {
                         if let data = (text + "\n").data(using: .utf8) {
                             self.logFileHandle?.write(data)
                         }
-                        return (id, text)
+                        return (id, text, firstPartialAt, finalAt)
                     }
-                    guard let (lineID, text) = line else { return }
+                    guard let (lineID, text, firstPartialAt, finalAt) = line else { return }
 
                     let strategy: TranslationSession.Strategy = capturedHighFidelity ? .highFidelity : .lowLatency
                     let (translated, usedFallback) = await translator.translate(text, from: translSrc, to: tgtID, strategy: strategy)
@@ -545,8 +551,14 @@ final class TranslationEngine: ObservableObject {
                         self?.terminologyCorrector.applyTranslationOverrides(to: translated) ?? translated
                     }
                     let result = overridden.isEmpty ? "⚠️ \(text)" : overridden
+                    let translatedAt = Date()
                     await MainActor.run { [weak self] in
                         guard let self else { return }
+                        if !overridden.isEmpty {
+                            SpeechOutputManager.shared.speak(
+                                overridden, languageID: tgtID,
+                                trace: LatencyTrace(firstPartialAt: firstPartialAt, finalAt: finalAt, translatedAt: translatedAt))
+                        }
                         guard let idx = self.subtitleLines.firstIndex(where: { $0.id == lineID }) else { return }
                         self.subtitleLines[idx].translated = result
                         if capturedHighFidelity {
@@ -615,6 +627,7 @@ final class TranslationEngine: ObservableObject {
         guard isRunning else { return }
         DiagnosticLog.shared.log("[STOP] session ended by user")
         isRunning = false
+        SpeechOutputManager.shared.stopAll()
         startupStatus = nil
         silenceTimer?.invalidate()
         silenceTimer = nil

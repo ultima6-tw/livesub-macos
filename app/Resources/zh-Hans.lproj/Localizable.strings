@@ -53,3 +53,8 @@
 "Installed" = "已安装";
 "Not installed" = "未安装";
 "Tap Start to begin" = "点击「开始」开始翻译";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "将翻译朗读到耳机";
+"Headphones detected" = "检测到耳机";
+"No headphones — silent" = "未检测到耳机 — 静音";

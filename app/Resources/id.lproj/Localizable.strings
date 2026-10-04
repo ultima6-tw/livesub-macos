@@ -53,3 +53,8 @@
 "Installed" = "Terpasang";
 "Not installed" = "Belum terpasang";
 "Tap Start to begin" = "Ketuk Mulai untuk memulai";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Bacakan terjemahan lewat headphone";
+"Headphones detected" = "Headphone terdeteksi";
+"No headphones — silent" = "Tanpa headphone — senyap";

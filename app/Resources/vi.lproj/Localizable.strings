@@ -53,3 +53,8 @@
 "Installed" = "Đã cài đặt";
 "Not installed" = "Chưa cài đặt";
 "Tap Start to begin" = "Nhấn Bắt đầu để bắt đầu";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Đọc bản dịch qua tai nghe";
+"Headphones detected" = "Đã phát hiện tai nghe";
+"No headphones — silent" = "Không có tai nghe — im lặng";

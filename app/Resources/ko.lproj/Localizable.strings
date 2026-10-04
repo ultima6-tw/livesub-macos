@@ -53,3 +53,8 @@
 "Installed" = "설치됨";
 "Not installed" = "설치되지 않음";
 "Tap Start to begin" = "시작을 탭하여 시작하세요";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "번역을 헤드폰으로 읽어주기";
+"Headphones detected" = "헤드폰 감지됨";
+"No headphones — silent" = "헤드폰 없음 — 무음";

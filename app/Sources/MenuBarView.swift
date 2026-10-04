@@ -3,7 +3,15 @@ import AppKit
 
 struct MenuBarView: View {
     @StateObject private var engine = TranslationEngine.shared
+    @StateObject private var speech = SpeechOutputManager.shared
     @State private var showingTerminologySheet = false
+    @State private var voiceRevision = 0   // forces Picker refresh after UserDefaults write
+
+    private var ttsVoiceID: Binding<String> {
+        Binding(
+            get: { _ = voiceRevision; return SpeechOutputManager.selectedVoiceID(for: engine.selectedTgtID) },
+            set: { SpeechOutputManager.setSelectedVoiceID($0, for: engine.selectedTgtID); voiceRevision += 1 })
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -123,6 +131,36 @@ struct MenuBarView: View {
 
             Toggle("Save Transcript", isOn: $engine.saveTranscript)
                 .toggleStyle(.checkbox)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Toggle("Speak Translation to Headphones", isOn: $speech.isEnabled)
+                    .toggleStyle(.checkbox)
+                if speech.isEnabled {
+                    Text(speech.headphonesConnected ? "Headphones detected" : "No headphones — silent")
+                        .font(.caption2).foregroundStyle(.secondary)
+                    HStack(spacing: 6) {
+                        Picker("Voice", selection: ttsVoiceID) {
+                            Text("Automatic").tag("")
+                            ForEach(SpeechOutputManager.voiceOptions(for: engine.selectedTgtID)) { opt in
+                                Text(opt.label).tag(opt.id)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Button {
+                            speech.preview(languageID: engine.selectedTgtID)
+                        } label: {
+                            Image(systemName: "play.circle")
+                        }
+                        .buttonStyle(.plain)
+                        .help("Preview voice")
+                    }
+                    if !speech.latencyInfo.isEmpty {
+                        Text(speech.latencyInfo)   // TEMP: latency tuning
+                            .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                    }
+                }
+            }
 
             Toggle("Diagnostic Logging", isOn: $engine.diagnosticLogging)
                 .toggleStyle(.checkbox)

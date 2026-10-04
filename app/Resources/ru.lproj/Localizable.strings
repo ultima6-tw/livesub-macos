@@ -53,3 +53,8 @@
 "Installed" = "Установлен";
 "Not installed" = "Не установлен";
 "Tap Start to begin" = "Нажмите «Начать» для запуска";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Озвучивать перевод в наушниках";
+"Headphones detected" = "Наушники обнаружены";
+"No headphones — silent" = "Нет наушников — без звука";

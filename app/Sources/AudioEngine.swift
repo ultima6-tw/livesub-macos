@@ -89,10 +89,58 @@ private final class SystemAudioContext: @unchecked Sendable {
 
 #endif // os(macOS)
 
+// MARK: - Microphone capture delegate (macOS)
+
+#if os(macOS)
+/// Converts AVCaptureAudioDataOutput sample buffers to 16 kHz mono float32 for the ASR stream.
+private final class MicCaptureDelegate: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, @unchecked Sendable {
+    private let continuation: AsyncStream<[Float]>.Continuation
+    private let outFmt = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16_000, channels: 1, interleaved: false)!
+    private var converter: AVAudioConverter?
+    private var srcFmt: AVAudioFormat?
+
+    init(continuation: AsyncStream<[Float]>.Continuation) { self.continuation = continuation }
+
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let desc = CMSampleBufferGetFormatDescription(sampleBuffer),
+              let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(desc) else { return }
+        let frames = AVAudioFrameCount(CMSampleBufferGetNumSamples(sampleBuffer))
+        guard frames > 0 else { return }
+
+        var asbdCopy = asbd.pointee
+        if srcFmt == nil || srcFmt!.streamDescription.pointee.mSampleRate != asbdCopy.mSampleRate
+            || srcFmt!.channelCount != asbdCopy.mChannelsPerFrame {
+            guard let f = AVAudioFormat(streamDescription: &asbdCopy), let c = AVAudioConverter(from: f, to: outFmt) else { return }
+            srcFmt = f; converter = c
+        }
+        guard let srcFmt, let converter,
+              let inBuf = AVAudioPCMBuffer(pcmFormat: srcFmt, frameCapacity: frames) else { return }
+        inBuf.frameLength = frames
+        guard CMSampleBufferCopyPCMDataIntoAudioBufferList(
+            sampleBuffer, at: 0, frameCount: Int32(frames), into: inBuf.mutableAudioBufferList) == noErr else { return }
+
+        let outCap = AVAudioFrameCount((Double(frames) * outFmt.sampleRate / srcFmt.sampleRate).rounded(.up)) + 32
+        guard let outBuf = AVAudioPCMBuffer(pcmFormat: outFmt, frameCapacity: outCap) else { return }
+        var err: NSError?
+        var fed = false
+        converter.convert(to: outBuf, error: &err) { _, status in
+            if fed { status.pointee = .noDataNow; return nil }
+            fed = true; status.pointee = .haveData; return inBuf
+        }
+        guard err == nil, outBuf.frameLength > 0, let ptr = outBuf.floatChannelData else { return }
+        continuation.yield(Array(UnsafeBufferPointer(start: ptr[0], count: Int(outBuf.frameLength))))
+    }
+}
+#endif
+
 // MARK: - AudioEngine
 
 final class AudioEngine {
     private var avEngine: AVAudioEngine?
+    #if os(macOS)
+    private var captureSession: AVCaptureSession?
+    private var captureDelegate: MicCaptureDelegate?
+    #endif
     private var fileReadTask: Task<Void, Never>?
 
     #if os(macOS)
@@ -106,23 +154,82 @@ final class AudioEngine {
     // MARK: Microphone — macOS (with optional device selection)
 
     #if os(macOS)
+    /// Uses AVCaptureSession so the chosen device is honoured. AVAudioEngine rebinds its inputNode
+    /// to the Default Device Aggregate inside start(), which silently overrides the selected mic
+    /// when the system default input is Bluetooth (see NOTES.md 2026-10-04).
     func start(deviceID: AudioDeviceID?, continuation: AsyncStream<[Float]>.Continuation) throws {
-        let engine = AVAudioEngine()
+        DiagnosticLog.shared.log("[MIC] requested=\(Self.describeDevice(deviceID)) systemDefaultInput=\(Self.describeDevice(Self.defaultInputDeviceID()))")
+        let device: AVCaptureDevice
         if let deviceID {
-            let audioUnit = engine.inputNode.audioUnit!
-            var dev = deviceID
-            let status = AudioUnitSetProperty(
-                audioUnit,
-                kAudioOutputUnitProperty_CurrentDevice,
-                kAudioUnitScope_Global,
-                0, &dev,
-                UInt32(MemoryLayout<AudioDeviceID>.size)
-            )
-            if status != noErr {
-                throw AudioEngineError.deviceSetFailed(status)
+            guard let uid = Self.deviceUID(deviceID), let d = AVCaptureDevice(uniqueID: uid) else {
+                throw AudioEngineError.deviceSetFailed(-1)
             }
+            device = d
+        } else {
+            guard let d = AVCaptureDevice.default(for: .audio) else { throw AudioEngineError.deviceSetFailed(-1) }
+            device = d
         }
-        try startAVEngine(engine, continuation: continuation)
+        let input: AVCaptureDeviceInput
+        do { input = try AVCaptureDeviceInput(device: device) }
+        catch { throw AudioEngineError.deviceSetFailed(-2) }
+
+        let session = AVCaptureSession()
+        let output = AVCaptureAudioDataOutput()
+        guard session.canAddInput(input), session.canAddOutput(output) else {
+            throw AudioEngineError.deviceSetFailed(-3)
+        }
+        session.addInput(input)
+        session.addOutput(output)
+        let delegate = MicCaptureDelegate(continuation: continuation)
+        output.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "tw.ultima6.jasub.miccapture"))
+        session.startRunning()
+        captureSession = session
+        captureDelegate = delegate
+        DiagnosticLog.shared.log("[MIC] capture session started: device=\(device.localizedName) uid=\(device.uniqueID) running=\(session.isRunning)")
+    }
+
+    // MARK: Mic diagnostics
+
+    private static func defaultInputDeviceID() -> AudioDeviceID {
+        var addr = AudioObjectPropertyAddress(
+            mSelector: kAudioHardwarePropertyDefaultInputDevice,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain)
+        var id: AudioDeviceID = 0
+        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
+        AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &addr, 0, nil, &size, &id)
+        return id
+    }
+
+    private static func currentDevice(of audioUnit: AudioUnit) -> AudioDeviceID {
+        var dev: AudioDeviceID = 0
+        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
+        AudioUnitGetProperty(audioUnit, kAudioOutputUnitProperty_CurrentDevice,
+                             kAudioUnitScope_Global, 0, &dev, &size)
+        return dev
+    }
+
+    private static func deviceUID(_ id: AudioDeviceID) -> String? {
+        var addr = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyDeviceUID,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain)
+        var ref: Unmanaged<CFString>? = nil
+        var size = UInt32(MemoryLayout<CFString?>.size)
+        guard AudioObjectGetPropertyData(id, &addr, 0, nil, &size, &ref) == noErr else { return nil }
+        return ref?.takeRetainedValue() as String?
+    }
+
+    private static func describeDevice(_ id: AudioDeviceID?) -> String {
+        guard let id, id != 0 else { return "none" }
+        var addr = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyDeviceNameCFString,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain)
+        var ref: Unmanaged<CFString>? = nil
+        var size = UInt32(MemoryLayout<CFString?>.size)
+        let ok = AudioObjectGetPropertyData(id, &addr, 0, nil, &size, &ref) == noErr
+        return "\(ok ? (ref?.takeRetainedValue() as String? ?? "?") : "?")(\(id))"
     }
     #else
     // MARK: Microphone — iOS (always default mic, no device selection)
@@ -295,6 +402,12 @@ final class AudioEngine {
         avEngine?.inputNode.removeTap(onBus: 0)
         avEngine?.stop()
         avEngine = nil
+
+        #if os(macOS)
+        captureSession?.stopRunning()
+        captureSession = nil
+        captureDelegate = nil
+        #endif
 
         fileReadTask?.cancel()
         fileReadTask = nil

@@ -53,3 +53,8 @@
 "Installed" = "インストール済み";
 "Not installed" = "未インストール";
 "Tap Start to begin" = "「開始」をタップして始める";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "翻訳をヘッドフォンで読み上げ";
+"Headphones detected" = "ヘッドフォンを検出";
+"No headphones — silent" = "ヘッドフォンなし — 無音";

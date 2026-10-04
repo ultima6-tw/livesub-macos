@@ -53,3 +53,8 @@
 "Installed" = "مثبّت";
 "Not installed" = "غير مثبّت";
 "Tap Start to begin" = "اضغط بدء للشروع";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "قراءة الترجمة عبر سماعات الرأس";
+"Headphones detected" = "تم اكتشاف سماعات رأس";
+"No headphones — silent" = "لا توجد سماعات — صامت";

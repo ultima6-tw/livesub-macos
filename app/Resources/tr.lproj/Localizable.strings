@@ -53,3 +53,8 @@
 "Installed" = "Yüklü";
 "Not installed" = "Yüklü değil";
 "Tap Start to begin" = "Başlamak için Başlat'a dokunun";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "Çeviriyi kulaklıktan sesli oku";
+"Headphones detected" = "Kulaklık algılandı";
+"No headphones — silent" = "Kulaklık yok — sessiz";

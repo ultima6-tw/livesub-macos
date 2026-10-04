@@ -61,3 +61,11 @@
 "Installed" = "已安裝";
 "Not installed" = "未安裝";
 "Tap Start to begin" = "點選「開始」開始翻譯";
+
+/* Speak to headphones */
+"Speak Translation to Headphones" = "將翻譯朗讀到耳機";
+"Headphones detected" = "偵測到耳機";
+"No headphones — silent" = "未偵測到耳機 — 靜音";
+"Voice" = "語音角色";
+"Automatic" = "自動";
+"Preview voice" = "試聽聲音";
