@@ -26,6 +26,12 @@ final class SpeechOutputManager: NSObject, ObservableObject {
             if !isEnabled { stopAll() }
         }
     }
+    /// TTS volume 0...1 (AVSpeechUtterance.volume); applies to utterances created after the change.
+    @Published var volume: Double = {
+        UserDefaults.standard.object(forKey: "jasub.ttsVolume") as? Double ?? 1.0
+    }() {
+        didSet { UserDefaults.standard.set(volume, forKey: "jasub.ttsVolume") }
+    }
     @Published private(set) var headphonesConnected = false
     /// "last 1234 ms · avg 1500 ms after sentence end (translate 300 · TTS 200)"
     @Published private(set) var latencyInfo = ""
@@ -59,6 +65,7 @@ final class SpeechOutputManager: NSObject, ObservableObject {
         guard isEnabled, Self.outputIsHeadphones() else { return }
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = Self.voice(for: languageID)
+        utterance.volume = Float(volume)
         pending.append(Item(utterance: utterance, trace: trace))
         while pending.count > Self.maxQueue {
             let dropped = pending.removeFirst()
@@ -216,6 +223,7 @@ final class SpeechOutputManager: NSObject, ObservableObject {
         pending.removeAll()
         let u = AVSpeechUtterance(string: Self.sampleText(for: languageID))
         u.voice = Self.voice(for: languageID)
+        u.volume = Float(volume)
         synthesizer.speak(u)
     }
 

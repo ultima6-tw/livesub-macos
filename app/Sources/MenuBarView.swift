@@ -155,6 +155,12 @@ struct MenuBarView: View {
                         .buttonStyle(.plain)
                         .help("Preview voice")
                     }
+                    HStack(spacing: 6) {
+                        Image(systemName: "speaker.fill").font(.caption2).foregroundStyle(.secondary)
+                        Slider(value: $speech.volume, in: 0.1...1.0)
+                        Image(systemName: "speaker.wave.3.fill").font(.caption2).foregroundStyle(.secondary)
+                    }
+                    .help("Translation volume")
                     if !speech.latencyInfo.isEmpty {
                         Text(speech.latencyInfo)   // TEMP: latency tuning
                             .font(.caption2.monospaced()).foregroundStyle(.secondary)
