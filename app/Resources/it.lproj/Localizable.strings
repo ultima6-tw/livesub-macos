@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Leggi la traduzione in cuffia";
 "Headphones detected" = "Cuffie rilevate";
 "No headphones — silent" = "Nessuna cuffia — silenzio";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Consenti scorrimento manuale";
+"Show Translation" = "Mostra traduzione";
+"Done" = "Fine";
+"Voice" = "Voce";
+"Automatic" = "Automatica";
+"Preview voice" = "Ascolta voce";
+"Translation volume" = "Volume traduzione";
+"Use Custom Vocabulary" = "Usa vocabolario personalizzato";
+"Manage Vocabularies…" = "Gestisci vocabolari…";
+"Custom Vocabularies" = "Vocabolari personalizzati";
+"Vocabulary Name" = "Nome del vocabolario";
+"Select or add a vocabulary." = "Seleziona o aggiungi un vocabolario.";
+"Import…" = "Importa…";
+"Export…" = "Esporta…";
+"Close" = "Chiudi";
+"vocab.newName" = "Nuovo vocabolario";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Lingua delle parole:";
+"vocab.example.travel" = "Viaggio";
+"vocab.example.shopping" = "Shopping";
+"vocab.example.medical" = "Visita medica";
+"domain.migratedName" = "Il mio glossario";
+"domain.termCount" = "%d termini (solo i primi %d usati per il riconoscimento vocale)";
+"hint.vocabMenu" = "Aggiungi qui nomi, termini tecnici e altre parole che senti spesso, così il riconoscimento vocale li riconosce meglio.";
+"hint.vocab" = "Prima di «Avvia», attiva «Usa vocabolario personalizzato» e scegli un elenco. Le parole dell'elenco vengono passate al riconoscimento vocale come suggerimenti e usate per correggere grafie simili nella trascrizione; le altre parole non cambiano. Aggiungi nomi, termini tecnici e parole spesso riconosciute male, nella lingua parlata: le parole comuni non servono. Una per riga, ad es. «Feshbach resonance»; aggiungi « = traduzione» per imporre anche la traduzione. Importa/Esporta usano file di testo nello stesso formato.";
+"Check for Updates Automatically" = "Controlla aggiornamenti automaticamente";
+"Check Now" = "Controlla ora";
+"hint.updates" = "Controlla su GitHub una volta al giorno se c'è una nuova versione e chiede prima di installarla. Nessun altro dato viene inviato.";
+"Frequent" = "Frequenti";
+"All" = "Tutte";
+"High Quality Translation" = "Traduzione di alta qualità";
+"No network — using on-device translation" = "Nessuna rete — traduzione sul dispositivo";
+"Requires network. Falls back to on-device if unavailable." = "Richiede la rete. Se non disponibile usa la traduzione sul dispositivo.";

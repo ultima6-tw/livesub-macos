@@ -52,9 +52,44 @@
 "Translation" = "Übersetzung";
 "Installed" = "Installiert";
 "Not installed" = "Nicht installiert";
-"Tap Start to begin" = "Zum Beginnen auf „Starten" tippen";
+"Tap Start to begin" = "Zum Beginnen auf „Starten“ tippen";
 
 /* Speak to headphones */
 "Speak Translation to Headphones" = "Übersetzung über Kopfhörer vorlesen";
 "Headphones detected" = "Kopfhörer erkannt";
 "No headphones — silent" = "Keine Kopfhörer — stumm";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Manuelles Scrollen erlauben";
+"Show Translation" = "Übersetzung anzeigen";
+"Done" = "Fertig";
+"Voice" = "Stimme";
+"Automatic" = "Automatisch";
+"Preview voice" = "Stimme anhören";
+"Translation volume" = "Übersetzungslautstärke";
+"Use Custom Vocabulary" = "Eigenes Vokabular verwenden";
+"Manage Vocabularies…" = "Vokabellisten verwalten…";
+"Custom Vocabularies" = "Eigene Vokabellisten";
+"Vocabulary Name" = "Name der Liste";
+"Select or add a vocabulary." = "Liste auswählen oder hinzufügen.";
+"Import…" = "Importieren…";
+"Export…" = "Exportieren…";
+"Close" = "Schließen";
+"vocab.newName" = "Neue Liste";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Sprache der Wörter:";
+"vocab.example.travel" = "Reisen";
+"vocab.example.shopping" = "Einkaufen";
+"vocab.example.medical" = "Arztbesuch";
+"domain.migratedName" = "Mein Glossar";
+"domain.termCount" = "%d Begriffe (nur die ersten %d für die Spracherkennung)";
+"hint.vocabMenu" = "Namen, Fachbegriffe und andere häufig gehörte Wörter hier eintragen – die Spracherkennung erkennt sie dann zuverlässiger.";
+"hint.vocab" = "Vor „Starten“ „Eigenes Vokabular verwenden“ aktivieren und eine Liste wählen. Wörter der Liste werden der Spracherkennung als Hinweise übergeben und zum Korrigieren ähnlich falsch erkannter Schreibweisen im Transkript verwendet; andere Wörter bleiben unverändert. Namen, Fachbegriffe und andere oft falsch erkannte Wörter in der gesprochenen Sprache eintragen – gängige Wörter sind nicht nötig. Ein Begriff pro Zeile, z. B. „Feshbach resonance“; mit „ = Übersetzung“ wird auch die Übersetzung festgelegt. Import/Export verwenden Textdateien im selben Format.";
+"Check for Updates Automatically" = "Automatisch nach Updates suchen";
+"Check Now" = "Jetzt suchen";
+"hint.updates" = "Sucht einmal täglich auf GitHub nach einer neuen Version und fragt vor der Installation. Sonst werden keine Daten gesendet.";
+"Frequent" = "Häufig";
+"All" = "Alle";
+"High Quality Translation" = "Hochwertige Übersetzung";
+"No network — using on-device translation" = "Kein Netzwerk – Übersetzung auf dem Gerät";
+"Requires network. Falls back to on-device if unavailable." = "Benötigt Netzwerk. Ohne Verbindung wird auf dem Gerät übersetzt.";

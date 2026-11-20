@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "อ่านคำแปลออกทางหูฟัง";
 "Headphones detected" = "ตรวจพบหูฟัง";
 "No headphones — silent" = "ไม่มีหูฟัง — ปิดเสียง";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "อนุญาตให้เลื่อนด้วยตนเอง";
+"Show Translation" = "แสดงคำแปล";
+"Done" = "เสร็จสิ้น";
+"Voice" = "เสียง";
+"Automatic" = "อัตโนมัติ";
+"Preview voice" = "ฟังตัวอย่างเสียง";
+"Translation volume" = "ระดับเสียงคำแปล";
+"Use Custom Vocabulary" = "ใช้คลังคำศัพท์ที่กำหนดเอง";
+"Manage Vocabularies…" = "จัดการคลังคำศัพท์…";
+"Custom Vocabularies" = "คลังคำศัพท์ที่กำหนดเอง";
+"Vocabulary Name" = "ชื่อคลังคำศัพท์";
+"Select or add a vocabulary." = "เลือกหรือเพิ่มคลังคำศัพท์";
+"Import…" = "นำเข้า…";
+"Export…" = "ส่งออก…";
+"Close" = "ปิด";
+"vocab.newName" = "คลังคำศัพท์ใหม่";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "ภาษาของคำศัพท์:";
+"vocab.example.travel" = "ท่องเที่ยว";
+"vocab.example.shopping" = "ช้อปปิ้ง";
+"vocab.example.medical" = "พบแพทย์";
+"domain.migratedName" = "อภิธานศัพท์ของฉัน";
+"domain.termCount" = "%d คำ (การรู้จำเสียงใช้เฉพาะ %d คำแรก)";
+"hint.vocabMenu" = "เพิ่มชื่อเฉพาะ ศัพท์เทคนิค และคำที่ได้ยินบ่อยไว้ที่นี่ เพื่อให้การรู้จำเสียงจับคำเหล่านั้นได้แม่นยำขึ้น";
+"hint.vocab" = "ก่อนกด “เริ่ม” ให้เปิด “ใช้คลังคำศัพท์ที่กำหนดเอง” และเลือกรายการ คำในรายการจะถูกส่งให้การรู้จำเสียงเป็นคำใบ้ และใช้แก้คำที่สะกดผิดใกล้เคียงในข้อความถอดเสียง คำที่ไม่อยู่ในรายการจะไม่ได้รับผลกระทบ ให้เพิ่มชื่อเฉพาะ ศัพท์เทคนิค และคำที่มักฟังผิด เป็นภาษาของผู้พูด ไม่ต้องเพิ่มคำทั่วไป หนึ่งคำต่อบรรทัด เช่น “Feshbach resonance” เติม “ = คำแปล” เพื่อกำหนดคำแปลด้วย การนำเข้า/ส่งออกใช้ไฟล์ข้อความรูปแบบเดียวกัน";
+"Check for Updates Automatically" = "ตรวจหาอัปเดตโดยอัตโนมัติ";
+"Check Now" = "ตรวจหาเดี๋ยวนี้";
+"hint.updates" = "ตรวจหาเวอร์ชันใหม่บน GitHub วันละครั้ง และจะถามก่อนติดตั้ง ไม่มีการส่งข้อมูลอื่นใด";
+"Frequent" = "ใช้บ่อย";
+"All" = "ทั้งหมด";
+"High Quality Translation" = "การแปลคุณภาพสูง";
+"No network — using on-device translation" = "ไม่มีเครือข่าย — ใช้การแปลบนอุปกรณ์";
+"Requires network. Falls back to on-device if unavailable." = "ต้องใช้เครือข่าย หากไม่มีจะใช้การแปลบนอุปกรณ์แทน";

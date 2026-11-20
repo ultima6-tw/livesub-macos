@@ -14,7 +14,7 @@ import Network
 ///   POST /start               -> engine.start(), returns state
 ///   POST /stop                -> engine.stop(), returns state
 ///   POST /config  {"src":"en-US","tgt":"zh-TW","device":"...",
-///                  "glossary":"term\nterm2 = 翻譯","highFidelity":false}
+///                  "domain":"Physics","glossary":"term\nterm2 = 翻譯","highFidelity":false}
 ///                              -> applies given fields (all optional), returns state
 @MainActor
 final class DebugServer {
@@ -113,6 +113,19 @@ final class DebugServer {
         if let src = obj["src"] as? String { engine.selectedSrcID = src }
         if let tgt = obj["tgt"] as? String { engine.selectedTgtID = tgt }
         if let device = obj["device"] as? String { engine.selectedDevice = device }
+        // "domain": "" = general conversation; a name selects that domain,
+        // creating it if missing. "glossary" then edits the selected domain.
+        if let domainName = obj["domain"] as? String {
+            if domainName.isEmpty {
+                engine.selectedDomainID = ""
+            } else if let existing = engine.domains.first(where: { $0.name == domainName }) {
+                engine.selectedDomainID = existing.id
+            } else {
+                let domain = ContentDomain(name: domainName, glossaryText: "")
+                engine.domains.append(domain)
+                engine.selectedDomainID = domain.id
+            }
+        }
         if let glossary = obj["glossary"] as? String { engine.terminologyGlossaryText = glossary }
         if let hf = obj["highFidelity"] as? Bool { engine.highFidelityTranslation = hf }
     }
@@ -139,6 +152,8 @@ final class DebugServer {
         let selectedDevice: String
         let systemAudioID: String
         let inputDevices: [DeviceDTO]
+        let contentDomain: String
+        let activeASREngine: String
         let terminologyGlossaryText: String
         let startError: String?
         let startupStatus: String?
@@ -157,6 +172,8 @@ final class DebugServer {
             selectedDevice: engine.selectedDevice,
             systemAudioID: TranslationEngine.systemAudioID,
             inputDevices: engine.inputDevices.map { DeviceDTO(name: $0.name, isDefault: $0.isDefault) },
+            contentDomain: engine.selectedDomain?.name ?? "",
+            activeASREngine: engine.activeASREngine,
             terminologyGlossaryText: engine.terminologyGlossaryText,
             startError: engine.startError,
             startupStatus: engine.startupStatus,

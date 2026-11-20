@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Đọc bản dịch qua tai nghe";
 "Headphones detected" = "Đã phát hiện tai nghe";
 "No headphones — silent" = "Không có tai nghe — im lặng";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Cho phép cuộn thủ công";
+"Show Translation" = "Hiện bản dịch";
+"Done" = "Xong";
+"Voice" = "Giọng đọc";
+"Automatic" = "Tự động";
+"Preview voice" = "Nghe thử giọng";
+"Translation volume" = "Âm lượng bản dịch";
+"Use Custom Vocabulary" = "Dùng từ vựng tùy chỉnh";
+"Manage Vocabularies…" = "Quản lý từ vựng…";
+"Custom Vocabularies" = "Từ vựng tùy chỉnh";
+"Vocabulary Name" = "Tên danh sách";
+"Select or add a vocabulary." = "Chọn hoặc thêm một danh sách từ vựng.";
+"Import…" = "Nhập…";
+"Export…" = "Xuất…";
+"Close" = "Đóng";
+"vocab.newName" = "Danh sách mới";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Ngôn ngữ của từ:";
+"vocab.example.travel" = "Du lịch";
+"vocab.example.shopping" = "Mua sắm";
+"vocab.example.medical" = "Đi khám bệnh";
+"domain.migratedName" = "Thuật ngữ của tôi";
+"domain.termCount" = "%d từ (chỉ %d từ đầu tiên được dùng cho nhận dạng giọng nói)";
+"hint.vocabMenu" = "Thêm tên riêng, thuật ngữ và những từ bạn thường nghe vào đây để nhận dạng giọng nói nhận ra chúng tốt hơn.";
+"hint.vocab" = "Trước khi bấm “Bắt đầu”, bật “Dùng từ vựng tùy chỉnh” và chọn một danh sách. Các từ trong danh sách được gửi cho nhận dạng giọng nói làm gợi ý và dùng để sửa các lỗi chính tả gần giống trong bản ghi; từ không có trong danh sách không bị ảnh hưởng. Hãy thêm tên riêng, thuật ngữ và từ hay bị nhận sai, bằng ngôn ngữ của người nói — không cần thêm từ thông dụng. Mỗi dòng một từ, ví dụ “Feshbach resonance”; thêm “ = bản dịch” để chỉ định cả cách dịch. Nhập/Xuất dùng tệp văn bản cùng định dạng.";
+"Check for Updates Automatically" = "Tự động kiểm tra cập nhật";
+"Check Now" = "Kiểm tra ngay";
+"hint.updates" = "Mỗi ngày kiểm tra GitHub một lần xem có phiên bản mới không và hỏi trước khi cài đặt. Không gửi dữ liệu nào khác.";
+"Frequent" = "Thường dùng";
+"All" = "Tất cả";
+"High Quality Translation" = "Dịch chất lượng cao";
+"No network — using on-device translation" = "Không có mạng — đang dịch trên thiết bị";
+"Requires network. Falls back to on-device if unavailable." = "Cần mạng. Nếu không có sẽ chuyển sang dịch trên thiết bị.";

@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Vertaling voorlezen via koptelefoon";
 "Headphones detected" = "Koptelefoon gedetecteerd";
 "No headphones — silent" = "Geen koptelefoon — stil";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Handmatig scrollen toestaan";
+"Show Translation" = "Vertaling tonen";
+"Done" = "Gereed";
+"Voice" = "Stem";
+"Automatic" = "Automatisch";
+"Preview voice" = "Stem beluisteren";
+"Translation volume" = "Volume vertaling";
+"Use Custom Vocabulary" = "Eigen woordenlijst gebruiken";
+"Manage Vocabularies…" = "Woordenlijsten beheren…";
+"Custom Vocabularies" = "Eigen woordenlijsten";
+"Vocabulary Name" = "Naam van woordenlijst";
+"Select or add a vocabulary." = "Selecteer of voeg een woordenlijst toe.";
+"Import…" = "Importeren…";
+"Export…" = "Exporteren…";
+"Close" = "Sluiten";
+"vocab.newName" = "Nieuwe woordenlijst";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Taal van de woorden:";
+"vocab.example.travel" = "Reizen";
+"vocab.example.shopping" = "Winkelen";
+"vocab.example.medical" = "Doktersbezoek";
+"domain.migratedName" = "Mijn glossarium";
+"domain.termCount" = "%d termen (alleen de eerste %d voor spraakherkenning)";
+"hint.vocabMenu" = "Voeg hier namen, vaktermen en andere woorden toe die je vaak hoort, zodat spraakherkenning ze beter oppikt.";
+"hint.vocab" = "Zet vóór ‘Starten’ ‘Eigen woordenlijst gebruiken’ aan en kies een lijst. Woorden uit de lijst worden als hint aan de spraakherkenning gegeven en gebruikt om bijna-goede spellingen in het transcript te corrigeren; andere woorden blijven ongewijzigd. Voeg namen, vaktermen en vaak verkeerd verstane woorden toe, in de gesproken taal — gewone woorden zijn niet nodig. Eén per regel, bijv. ‘Feshbach resonance’; voeg ‘ = vertaling’ toe om ook de vertaling vast te leggen. Importeren/exporteren gebruikt tekstbestanden in hetzelfde formaat.";
+"Check for Updates Automatically" = "Automatisch op updates controleren";
+"Check Now" = "Nu controleren";
+"hint.updates" = "Controleert één keer per dag op GitHub of er een nieuwe versie is en vraagt eerst toestemming voor de installatie. Er worden geen andere gegevens verstuurd.";
+"Frequent" = "Vaak gebruikt";
+"All" = "Alle";
+"High Quality Translation" = "Vertaling van hoge kwaliteit";
+"No network — using on-device translation" = "Geen netwerk — vertaling op het apparaat";
+"Requires network. Falls back to on-device if unavailable." = "Vereist netwerk. Valt terug op vertaling op het apparaat als dat niet beschikbaar is.";

@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Bacakan terjemahan lewat headphone";
 "Headphones detected" = "Headphone terdeteksi";
 "No headphones — silent" = "Tanpa headphone — senyap";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Izinkan Gulir Manual";
+"Show Translation" = "Tampilkan Terjemahan";
+"Done" = "Selesai";
+"Voice" = "Suara";
+"Automatic" = "Otomatis";
+"Preview voice" = "Dengarkan Suara";
+"Translation volume" = "Volume terjemahan";
+"Use Custom Vocabulary" = "Gunakan Kosakata Kustom";
+"Manage Vocabularies…" = "Kelola Kosakata…";
+"Custom Vocabularies" = "Kosakata Kustom";
+"Vocabulary Name" = "Nama Kosakata";
+"Select or add a vocabulary." = "Pilih atau tambahkan kosakata.";
+"Import…" = "Impor…";
+"Export…" = "Ekspor…";
+"Close" = "Tutup";
+"vocab.newName" = "Kosakata Baru";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Bahasa kata-kata:";
+"vocab.example.travel" = "Perjalanan";
+"vocab.example.shopping" = "Belanja";
+"vocab.example.medical" = "Ke Dokter";
+"domain.migratedName" = "Glosarium Saya";
+"domain.termCount" = "%d istilah (hanya %d pertama yang dipakai untuk pengenalan suara)";
+"hint.vocabMenu" = "Tambahkan nama, istilah teknis, dan kata lain yang sering Anda dengar di sini agar pengenalan suara lebih mudah mengenalinya.";
+"hint.vocab" = "Sebelum “Mulai”, aktifkan “Gunakan Kosakata Kustom” dan pilih daftar. Kata dalam daftar diberikan ke pengenalan suara sebagai petunjuk dan dipakai untuk mengoreksi ejaan yang mirip dalam transkrip; kata di luar daftar tidak terpengaruh. Tambahkan nama, istilah teknis, dan kata yang sering salah dikenali, dalam bahasa yang diucapkan — kata umum tidak perlu. Satu per baris, mis. “Feshbach resonance”; tambahkan “ = terjemahan” untuk menetapkan terjemahannya juga. Impor/Ekspor memakai file teks dengan format yang sama.";
+"Check for Updates Automatically" = "Periksa Pembaruan Otomatis";
+"Check Now" = "Periksa Sekarang";
+"hint.updates" = "Memeriksa versi baru di GitHub sekali sehari dan bertanya sebelum memasang. Tidak ada data lain yang dikirim.";
+"Frequent" = "Sering Dipakai";
+"All" = "Semua";
+"High Quality Translation" = "Terjemahan Berkualitas Tinggi";
+"No network — using on-device translation" = "Tidak ada jaringan — memakai terjemahan di perangkat";
+"Requires network. Falls back to on-device if unavailable." = "Memerlukan jaringan. Beralih ke terjemahan di perangkat jika tidak tersedia.";

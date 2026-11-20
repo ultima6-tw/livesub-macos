@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Leer la traducción en los auriculares";
 "Headphones detected" = "Auriculares detectados";
 "No headphones — silent" = "Sin auriculares — silencio";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Permitir desplazamiento manual";
+"Show Translation" = "Mostrar traducción";
+"Done" = "Listo";
+"Voice" = "Voz";
+"Automatic" = "Automática";
+"Preview voice" = "Escuchar voz";
+"Translation volume" = "Volumen de la traducción";
+"Use Custom Vocabulary" = "Usar vocabulario personalizado";
+"Manage Vocabularies…" = "Gestionar vocabularios…";
+"Custom Vocabularies" = "Vocabularios personalizados";
+"Vocabulary Name" = "Nombre del vocabulario";
+"Select or add a vocabulary." = "Selecciona o añade un vocabulario.";
+"Import…" = "Importar…";
+"Export…" = "Exportar…";
+"Close" = "Cerrar";
+"vocab.newName" = "Nuevo vocabulario";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Idioma de las palabras:";
+"vocab.example.travel" = "Viajes";
+"vocab.example.shopping" = "Compras";
+"vocab.example.medical" = "Médico";
+"domain.migratedName" = "Mi glosario";
+"domain.termCount" = "%d términos (solo los primeros %d se usan en el reconocimiento de voz)";
+"hint.vocabMenu" = "Añade aquí nombres, términos técnicos y otras palabras que oyes a menudo para que el reconocimiento de voz las detecte mejor.";
+"hint.vocab" = "Antes de «Iniciar», activa «Usar vocabulario personalizado» y elige una lista. Sus palabras se pasan al reconocimiento de voz como pistas y se usan para corregir grafías parecidas en la transcripción; las demás palabras no se ven afectadas. Añade nombres, términos técnicos y palabras que suelen reconocerse mal, en el idioma hablado; no hace falta añadir palabras comunes. Una por línea, p. ej. «Feshbach resonance»; añade « = traducción» para fijar también cómo se traduce. Importar/Exportar usan archivos de texto con el mismo formato.";
+"Check for Updates Automatically" = "Buscar actualizaciones automáticamente";
+"Check Now" = "Buscar ahora";
+"hint.updates" = "Busca una nueva versión en GitHub una vez al día y pregunta antes de instalar. No se envía ningún otro dato.";
+"Frequent" = "Frecuentes";
+"All" = "Todos";
+"High Quality Translation" = "Traducción de alta calidad";
+"No network — using on-device translation" = "Sin red: usando traducción en el dispositivo";
+"Requires network. Falls back to on-device if unavailable." = "Requiere red. Si no está disponible, usa la traducción en el dispositivo.";

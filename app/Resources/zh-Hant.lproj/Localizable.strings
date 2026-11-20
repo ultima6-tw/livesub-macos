@@ -40,11 +40,8 @@
 "Stop" = "停止";
 "Log Folder" = "記錄資料夾";
 "Quit JaSub" = "結束 JaSub";
-"Manage Terminology…" = "管理術語表…";
 
 /* Terminology glossary sheet */
-"Terminology Glossary" = "術語校正表";
-"One term per line, e.g. \"Max Verstappen\" — ASR output is fuzzy-corrected against this list. Add \" = translation\" to also force that term's translated form, e.g. \"Max Verstappen = 麥克斯·維斯塔潘\" (only takes effect if the translator leaves it untranslated)." = "一行一個詞彙，例如「Max Verstappen」——語音辨識結果會用這份清單模糊校正。加上「 = 翻譯」可以額外強制指定翻譯結果，例如「Max Verstappen = 麥克斯·維斯塔潘」（只有在翻譯引擎沒有把原文翻掉時才會生效）。";
 "Done" = "完成";
 
 /* Subtitle overlay */
@@ -70,3 +67,33 @@
 "Automatic" = "自動";
 "Preview voice" = "試聽聲音";
 "Translation volume" = "翻譯音量";
+
+/* Custom vocabulary */
+"Use Custom Vocabulary" = "使用自訂詞庫";
+"Manage Vocabularies…" = "管理詞庫…";
+"Custom Vocabularies" = "自訂詞庫";
+"Vocabulary Name" = "詞庫名稱";
+"Select or add a vocabulary." = "請選擇或新增一份詞庫。";
+"Import…" = "匯入…";
+"Export…" = "匯出…";
+"Close" = "關閉";
+"vocab.newName" = "新詞庫";
+"vocab.nameWithLanguage" = "%@（%@）";
+"vocab.importLanguage" = "詞彙的語言：";
+"vocab.example.travel" = "旅行";
+"vocab.example.shopping" = "購物";
+"vocab.example.medical" = "看病";
+"domain.migratedName" = "我的術語表";
+"domain.termCount" = "%d 個詞（語音辨識只採用前 %d 個）";
+"hint.vocabMenu" = "常用的人名、專有名詞、術語放這裡，語音辨識會更容易認出來。";
+"hint.vocab" = "按「開始」前，勾選「使用自訂詞庫」並選擇一份詞庫。清單裡的詞會提示給語音辨識，並用來校正原文中拼錯的相近詞；不在清單裡的詞不受影響。請放容易聽錯的人名、專有名詞、術語，且要用講者說的語言，常見字不需要加入。一行一個詞，例如「Feshbach resonance」；加上「 = 譯名」可同時指定翻譯。匯入／匯出使用同樣格式的純文字檔。";
+
+/* Updates (Sparkle) */
+"Check for Updates Automatically" = "自動檢查更新";
+"Check Now" = "立即檢查";
+"hint.updates" = "每天到 GitHub 檢查一次是否有新版本，安裝前會先詢問。不會傳送其他資料。";
+"Frequent" = "常用";
+"All" = "全部";
+"High Quality Translation" = "高品質翻譯";
+"No network — using on-device translation" = "無網路——改用裝置端翻譯";
+"Requires network. Falls back to on-device if unavailable." = "需要網路；無法連線時改用裝置端翻譯。";

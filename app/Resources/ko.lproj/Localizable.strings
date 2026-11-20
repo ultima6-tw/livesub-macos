@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "번역을 헤드폰으로 읽어주기";
 "Headphones detected" = "헤드폰 감지됨";
 "No headphones — silent" = "헤드폰 없음 — 무음";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "수동 스크롤 허용";
+"Show Translation" = "번역 표시";
+"Done" = "완료";
+"Voice" = "음성";
+"Automatic" = "자동";
+"Preview voice" = "음성 미리 듣기";
+"Translation volume" = "번역 음량";
+"Use Custom Vocabulary" = "사용자 어휘 사용";
+"Manage Vocabularies…" = "어휘 목록 관리…";
+"Custom Vocabularies" = "사용자 어휘";
+"Vocabulary Name" = "어휘 목록 이름";
+"Select or add a vocabulary." = "어휘 목록을 선택하거나 추가하세요.";
+"Import…" = "가져오기…";
+"Export…" = "내보내기…";
+"Close" = "닫기";
+"vocab.newName" = "새 어휘 목록";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "단어의 언어:";
+"vocab.example.travel" = "여행";
+"vocab.example.shopping" = "쇼핑";
+"vocab.example.medical" = "병원";
+"domain.migratedName" = "내 용어집";
+"domain.termCount" = "%d개 단어(음성 인식에는 처음 %d개만 사용)";
+"hint.vocabMenu" = "자주 듣는 인명, 고유명사, 전문 용어를 여기에 추가하면 음성 인식이 더 잘 알아듣습니다.";
+"hint.vocab" = "‘시작’ 전에 ‘사용자 어휘 사용’을 켜고 목록을 선택하세요. 목록의 단어는 음성 인식에 힌트로 전달되고, 받아쓰기에서 비슷하게 틀린 표기를 바로잡는 데도 쓰입니다. 목록에 없는 단어에는 영향이 없습니다. 잘못 알아듣기 쉬운 인명, 고유명사, 전문 용어를 말하는 사람의 언어로 추가하세요(일반적인 단어는 필요 없습니다). 한 줄에 한 단어, 예: ‘Feshbach resonance’. ‘ = 번역어’를 붙이면 번역도 지정됩니다. 가져오기/내보내기는 같은 형식의 텍스트 파일을 사용합니다.";
+"Check for Updates Automatically" = "업데이트 자동 확인";
+"Check Now" = "지금 확인";
+"hint.updates" = "하루에 한 번 GitHub에서 새 버전을 확인하고 설치 전에 묻습니다. 다른 데이터는 보내지 않습니다.";
+"Frequent" = "자주 사용";
+"All" = "전체";
+"High Quality Translation" = "고품질 번역";
+"No network — using on-device translation" = "네트워크 없음 — 기기 내 번역 사용 중";
+"Requires network. Falls back to on-device if unavailable." = "네트워크가 필요합니다. 연결할 수 없으면 기기 내 번역으로 전환합니다.";

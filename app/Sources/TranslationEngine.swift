@@ -111,12 +111,34 @@ final class TranslationEngine: ObservableObject {
         let saved = UserDefaults.standard.double(forKey: "jasub.translationFontSize")
         return saved >= 12 ? CGFloat(saved) : 20
     }()
-    @Published var terminologyGlossaryText: String = UserDefaults.standard.string(forKey: "jasub.terminologyGlossaryText") ?? "" {
+    /// User-defined content domains (see ContentDomain). Chosen before Start.
+    @Published var domains: [ContentDomain] = TranslationEngine.loadDomains() {
         didSet {
-            UserDefaults.standard.set(terminologyGlossaryText, forKey: "jasub.terminologyGlossaryText")
-            terminologyCorrector.glossary = terminologyGlossaryText.components(separatedBy: .newlines)
+            if let data = try? JSONEncoder().encode(domains) {
+                UserDefaults.standard.set(data, forKey: "jasub.domains")
+            }
+            refreshTerminologyCorrector()
         }
     }
+    /// Selected domain id; empty = general conversation (SpeechTranscriber,
+    /// no glossary). Takes effect at the next Start.
+    @Published var selectedDomainID: String = UserDefaults.standard.string(forKey: "jasub.selectedDomainID") ?? "" {
+        didSet {
+            UserDefaults.standard.set(selectedDomainID, forKey: "jasub.selectedDomainID")
+            refreshTerminologyCorrector()
+        }
+    }
+    var selectedDomain: ContentDomain? { domains.first { $0.id == selectedDomainID } }
+    /// Glossary of the selected domain (empty in general conversation).
+    var terminologyGlossaryText: String {
+        get { selectedDomain?.glossaryText ?? "" }
+        set {
+            guard let i = domains.firstIndex(where: { $0.id == selectedDomainID }) else { return }
+            domains[i].glossaryText = newValue
+        }
+    }
+    /// ASR engine used by the current/last session, e.g. "DictationTranscriber (30 terms)".
+    @Published var activeASREngine: String = ""
     @Published var originalPartial: String = ""
     @Published var originalScrollMetrics = ScrollMetrics()
     @Published var translationScrollMetrics = ScrollMetrics()
@@ -164,10 +186,91 @@ final class TranslationEngine: ObservableObject {
     private var sampleStreamContinuation: AsyncStream<[Float]>.Continuation?
     private var pipelineTask: Task<Void, Never>?
     private var hallucinationFilter = HallucinationFilter()
-    private var terminologyCorrector = TerminologyCorrector(
-        glossary: (UserDefaults.standard.string(forKey: "jasub.terminologyGlossaryText") ?? "")
-            .components(separatedBy: .newlines)
-    )
+    private var terminologyCorrector = TerminologyCorrector()
+
+    private func refreshTerminologyCorrector() {
+        terminologyCorrector.glossary = terminologyGlossaryText.components(separatedBy: .newlines)
+    }
+
+    /// Loads saved vocabularies (stored as `ContentDomain`). On first run
+    /// migrates the pre-vocabulary single glossary
+    /// (`jasub.terminologyGlossaryText`) into one list; with nothing to
+    /// migrate, seeds example lists so users see what belongs here. Once
+    /// saved (even as empty), examples are never re-added.
+    private static func loadDomains() -> [ContentDomain] {
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: "jasub.domains"),
+           let saved = try? JSONDecoder().decode([ContentDomain].self, from: data) {
+            return saved
+        }
+        let legacy = defaults.string(forKey: "jasub.terminologyGlossaryText") ?? ""
+        guard !legacy.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return exampleVocabularies
+        }
+        return [ContentDomain(
+            name: NSLocalizedString("domain.migratedName", value: "My Glossary", comment: ""),
+            glossaryText: legacy)]
+    }
+
+    /// Starter lists: words speech recognition tends to miss (names, drugs,
+    /// transit terms), not everyday words. English, the most common source;
+    /// the language goes in the name, e.g. "Travel (English)".
+    private static var exampleVocabularies: [ContentDomain] {
+        [
+            ContentDomain(
+                name: ContentDomain.name(NSLocalizedString("vocab.example.travel", value: "Travel", comment: "Example vocabulary name"), language: "en"),
+                glossaryText: """
+                    Narita
+                    Haneda
+                    Kansai Airport
+                    Shinkansen
+                    JR Pass
+                    Suica
+                    boarding pass
+                    layover
+                    baggage claim
+                    customs declaration
+                    immigration
+                    ryokan
+                    onsen
+                    """),
+            ContentDomain(
+                name: ContentDomain.name(NSLocalizedString("vocab.example.shopping", value: "Shopping", comment: "Example vocabulary name"), language: "en"),
+                glossaryText: """
+                    tax-free
+                    duty-free
+                    VAT refund
+                    Uniqlo
+                    Muji
+                    Don Quijote
+                    Bic Camera
+                    Yodobashi
+                    contactless
+                    Apple Pay
+                    size chart
+                    refund policy
+                    """),
+            ContentDomain(
+                name: ContentDomain.name(NSLocalizedString("vocab.example.medical", value: "Doctor Visit", comment: "Example vocabulary name"), language: "en"),
+                glossaryText: """
+                    ibuprofen
+                    acetaminophen
+                    paracetamol
+                    antibiotic
+                    amoxicillin
+                    antihistamine
+                    prescription
+                    pharmacy
+                    allergy
+                    blood pressure
+                    inflammation
+                    MRI
+                    CT scan
+                    X-ray
+                    insurance card
+                    """),
+        ]
+    }
 
     // MARK: Logging
 
@@ -180,6 +283,7 @@ final class TranslationEngine: ObservableObject {
         #if os(macOS)
         refreshDevices()
         #endif
+        refreshTerminologyCorrector()
 
         if UserDefaults.standard.string(forKey: "jasub.selectedTgtID") == nil {
             selectedTgtID = Self.systemDefaultTargetLanguage()
@@ -421,6 +525,8 @@ final class TranslationEngine: ObservableObject {
         let tgtID       = selectedTgtID
         let translSrc   = translationSrcCode(for: srcLocaleID)
         let capturedHighFidelity: Bool = highFidelityTranslation
+        let domainTerms = selectedDomain?.terms ?? []
+        let domainLabel = selectedDomain?.name ?? "general"
 
         #if os(macOS)
         let isSystemAudio = selectedDevice == Self.systemAudioID
@@ -597,13 +703,16 @@ final class TranslationEngine: ObservableObject {
             DiagnosticLog.shared.log("[OK] audio engine started")
 
             do {
-                try await asr.start(
+                let engineLabel = try await asr.start(
                     sampleStream: sampleStream,
                     locale: Locale(identifier: srcLocaleID),
+                    contextualStrings: domainTerms,
                     onStatus: { [weak self] msg in
                         Task { @MainActor [weak self] in self?.startupStatus = msg }
                     }
                 )
+                DiagnosticLog.shared.log("[ASR] domain=\(domainLabel) engine=\(engineLabel)")
+                await MainActor.run { self?.activeASREngine = engineLabel }
             } catch {
                 DiagnosticLog.shared.log("[FAIL] ASR: \(error)")
                 Task { @MainActor [weak self] in

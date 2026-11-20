@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Çeviriyi kulaklıktan sesli oku";
 "Headphones detected" = "Kulaklık algılandı";
 "No headphones — silent" = "Kulaklık yok — sessiz";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Elle kaydırmaya izin ver";
+"Show Translation" = "Çeviriyi Göster";
+"Done" = "Bitti";
+"Voice" = "Ses";
+"Automatic" = "Otomatik";
+"Preview voice" = "Sesi Dinle";
+"Translation volume" = "Çeviri ses düzeyi";
+"Use Custom Vocabulary" = "Özel Sözlük Kullan";
+"Manage Vocabularies…" = "Sözlükleri Yönet…";
+"Custom Vocabularies" = "Özel Sözlükler";
+"Vocabulary Name" = "Sözlük Adı";
+"Select or add a vocabulary." = "Bir sözlük seçin veya ekleyin.";
+"Import…" = "İçe Aktar…";
+"Export…" = "Dışa Aktar…";
+"Close" = "Kapat";
+"vocab.newName" = "Yeni Sözlük";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Kelimelerin dili:";
+"vocab.example.travel" = "Seyahat";
+"vocab.example.shopping" = "Alışveriş";
+"vocab.example.medical" = "Doktor Ziyareti";
+"domain.migratedName" = "Sözlüğüm";
+"domain.termCount" = "%d terim (konuşma tanıma için yalnızca ilk %d kullanılır)";
+"hint.vocabMenu" = "Sık duyduğunuz adları, terimleri ve diğer kelimeleri buraya ekleyin; konuşma tanıma bunları daha iyi algılar.";
+"hint.vocab" = "“Başlat”tan önce “Özel Sözlük Kullan”ı açın ve bir liste seçin. Listedeki kelimeler konuşma tanımaya ipucu olarak verilir ve dökümde benzer yanlış yazımları düzeltmek için kullanılır; listede olmayan kelimeler etkilenmez. Sık yanlış anlaşılan adları, terimleri ve kelimeleri konuşulan dilde ekleyin; yaygın kelimelere gerek yoktur. Her satıra bir tane, ör. “Feshbach resonance”; çeviriyi de belirlemek için “ = çeviri” ekleyin. İçe/dışa aktarma aynı biçimde düz metin dosyaları kullanır.";
+"Check for Updates Automatically" = "Güncellemeleri Otomatik Denetle";
+"Check Now" = "Şimdi Denetle";
+"hint.updates" = "Günde bir kez GitHub'da yeni sürüm olup olmadığını denetler ve yüklemeden önce sorar. Başka veri gönderilmez.";
+"Frequent" = "Sık Kullanılanlar";
+"All" = "Tümü";
+"High Quality Translation" = "Yüksek Kaliteli Çeviri";
+"No network — using on-device translation" = "Ağ yok — cihaz üzerinde çeviri kullanılıyor";
+"Requires network. Falls back to on-device if unavailable." = "Ağ gerektirir. Kullanılamazsa cihaz üzerinde çeviriye geçer.";

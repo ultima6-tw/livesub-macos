@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Czytaj tłumaczenie w słuchawkach";
 "Headphones detected" = "Wykryto słuchawki";
 "No headphones — silent" = "Brak słuchawek — cisza";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Zezwalaj na ręczne przewijanie";
+"Show Translation" = "Pokaż tłumaczenie";
+"Done" = "Gotowe";
+"Voice" = "Głos";
+"Automatic" = "Automatycznie";
+"Preview voice" = "Odsłuchaj głos";
+"Translation volume" = "Głośność tłumaczenia";
+"Use Custom Vocabulary" = "Używaj własnego słownika";
+"Manage Vocabularies…" = "Zarządzaj słownikami…";
+"Custom Vocabularies" = "Własne słowniki";
+"Vocabulary Name" = "Nazwa słownika";
+"Select or add a vocabulary." = "Wybierz lub dodaj słownik.";
+"Import…" = "Importuj…";
+"Export…" = "Eksportuj…";
+"Close" = "Zamknij";
+"vocab.newName" = "Nowy słownik";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Język słów:";
+"vocab.example.travel" = "Podróż";
+"vocab.example.shopping" = "Zakupy";
+"vocab.example.medical" = "Wizyta u lekarza";
+"domain.migratedName" = "Mój glosariusz";
+"domain.termCount" = "Terminy: %d (do rozpoznawania mowy używane jest tylko pierwszych %d)";
+"hint.vocabMenu" = "Dodaj tu nazwiska, terminy fachowe i inne często słyszane słowa, aby rozpoznawanie mowy lepiej je wychwytywało.";
+"hint.vocab" = "Przed „Rozpocznij” włącz „Używaj własnego słownika” i wybierz listę. Słowa z listy są przekazywane rozpoznawaniu mowy jako podpowiedzi i służą do poprawiania podobnie błędnych zapisów w transkrypcji; inne słowa pozostają bez zmian. Dodawaj nazwiska, terminy fachowe i słowa często źle rozpoznawane, w języku mówcy — popularnych słów nie trzeba. Jedno na wiersz, np. „Feshbach resonance”; dopisz „ = tłumaczenie”, aby wymusić także tłumaczenie. Import/eksport używa plików tekstowych w tym samym formacie.";
+"Check for Updates Automatically" = "Automatycznie sprawdzaj aktualizacje";
+"Check Now" = "Sprawdź teraz";
+"hint.updates" = "Raz dziennie sprawdza w GitHub, czy jest nowa wersja, i pyta przed instalacją. Żadne inne dane nie są wysyłane.";
+"Frequent" = "Częste";
+"All" = "Wszystkie";
+"High Quality Translation" = "Tłumaczenie wysokiej jakości";
+"No network — using on-device translation" = "Brak sieci — tłumaczenie na urządzeniu";
+"Requires network. Falls back to on-device if unavailable." = "Wymaga sieci. Bez połączenia używa tłumaczenia na urządzeniu.";

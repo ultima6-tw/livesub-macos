@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "翻訳をヘッドフォンで読み上げ";
 "Headphones detected" = "ヘッドフォンを検出";
 "No headphones — silent" = "ヘッドフォンなし — 無音";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "手動スクロールを許可";
+"Show Translation" = "翻訳を表示";
+"Done" = "完了";
+"Voice" = "音声";
+"Automatic" = "自動";
+"Preview voice" = "音声を試聴";
+"Translation volume" = "翻訳の音量";
+"Use Custom Vocabulary" = "カスタム語彙を使用";
+"Manage Vocabularies…" = "語彙リストを管理…";
+"Custom Vocabularies" = "カスタム語彙";
+"Vocabulary Name" = "語彙リスト名";
+"Select or add a vocabulary." = "語彙リストを選択または追加してください。";
+"Import…" = "読み込む…";
+"Export…" = "書き出す…";
+"Close" = "閉じる";
+"vocab.newName" = "新しい語彙リスト";
+"vocab.nameWithLanguage" = "%@（%@）";
+"vocab.importLanguage" = "語彙の言語：";
+"vocab.example.travel" = "旅行";
+"vocab.example.shopping" = "買い物";
+"vocab.example.medical" = "病院";
+"domain.migratedName" = "マイ用語集";
+"domain.termCount" = "%d 語（音声認識には最初の %d 語のみ使用）";
+"hint.vocabMenu" = "よく耳にする人名・固有名詞・専門用語をここに登録すると、音声認識で認識されやすくなります。";
+"hint.vocab" = "「開始」の前に「カスタム語彙を使用」をオンにしてリストを選んでください。リスト内の語は音声認識にヒントとして渡され、文字起こしの似た誤りの修正にも使われます。リストにない語には影響しません。聞き間違えられやすい人名・固有名詞・専門用語を、話される言語で登録してください（一般的な語は不要です）。1 行に 1 語、例：「Feshbach resonance」。「 = 訳語」を付けると訳語も指定できます。読み込み／書き出しは同じ形式のテキストファイルを使います。";
+"Check for Updates Automatically" = "自動的にアップデートを確認";
+"Check Now" = "今すぐ確認";
+"hint.updates" = "1 日 1 回 GitHub で新しいバージョンを確認し、インストール前に確認します。それ以外のデータは送信しません。";
+"Frequent" = "よく使う";
+"All" = "すべて";
+"High Quality Translation" = "高品質翻訳";
+"No network — using on-device translation" = "ネットワークなし — デバイス上の翻訳を使用中";
+"Requires network. Falls back to on-device if unavailable." = "ネットワークが必要です。使用できない場合はデバイス上の翻訳に切り替えます。";

@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "قراءة الترجمة عبر سماعات الرأس";
 "Headphones detected" = "تم اكتشاف سماعات رأس";
 "No headphones — silent" = "لا توجد سماعات — صامت";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "السماح بالتمرير اليدوي";
+"Show Translation" = "إظهار الترجمة";
+"Done" = "تم";
+"Voice" = "الصوت";
+"Automatic" = "تلقائي";
+"Preview voice" = "معاينة الصوت";
+"Translation volume" = "مستوى صوت الترجمة";
+"Use Custom Vocabulary" = "استخدام مفردات مخصّصة";
+"Manage Vocabularies…" = "إدارة قوائم المفردات…";
+"Custom Vocabularies" = "المفردات المخصّصة";
+"Vocabulary Name" = "اسم القائمة";
+"Select or add a vocabulary." = "اختر قائمة مفردات أو أضف واحدة.";
+"Import…" = "استيراد…";
+"Export…" = "تصدير…";
+"Close" = "إغلاق";
+"vocab.newName" = "قائمة جديدة";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "لغة الكلمات:";
+"vocab.example.travel" = "السفر";
+"vocab.example.shopping" = "التسوّق";
+"vocab.example.medical" = "زيارة الطبيب";
+"domain.migratedName" = "مسرد المصطلحات";
+"domain.termCount" = "%d مصطلحًا (تُستخدم أول %d فقط للتعرّف على الكلام)";
+"hint.vocabMenu" = "أضف هنا الأسماء والمصطلحات المتخصصة والكلمات التي تسمعها كثيرًا ليتعرّف عليها التعرّف على الكلام بدقة أكبر.";
+"hint.vocab" = "قبل «بدء»، فعّل «استخدام مفردات مخصّصة» واختر قائمة. تُمرَّر كلمات القائمة إلى التعرّف على الكلام كتلميحات وتُستخدم لتصحيح الأخطاء الإملائية القريبة في النص المفرَّغ؛ ولا تتأثر الكلمات غير الموجودة في القائمة. أضف الأسماء والمصطلحات والكلمات التي يُساء التعرّف عليها غالبًا، بلغة المتحدث — لا حاجة لإضافة الكلمات الشائعة. كلمة واحدة في كل سطر، مثل «Feshbach resonance»؛ أضف « = الترجمة» لتحديد الترجمة أيضًا. يستخدم الاستيراد/التصدير ملفات نصية بالتنسيق نفسه.";
+"Check for Updates Automatically" = "التحقق من التحديثات تلقائيًا";
+"Check Now" = "تحقّق الآن";
+"hint.updates" = "يتحقق من وجود إصدار جديد على GitHub مرة يوميًا ويسأل قبل التثبيت. لا تُرسل أي بيانات أخرى.";
+"Frequent" = "الأكثر استخدامًا";
+"All" = "الكل";
+"High Quality Translation" = "ترجمة عالية الجودة";
+"No network — using on-device translation" = "لا توجد شبكة — يتم استخدام الترجمة على الجهاز";
+"Requires network. Falls back to on-device if unavailable." = "يتطلب الشبكة. يتم التبديل إلى الترجمة على الجهاز عند عدم توفرها.";

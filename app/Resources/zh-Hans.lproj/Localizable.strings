@@ -7,10 +7,10 @@
 "startup.translationPackMissing" = "翻译语言包未安装，将使用 Apple Intelligence（较慢）";
 
 /* Errors */
-"error.screenCapture" = "JaSub 需要"屏幕录制"权限才能采集系统音频。请前往"系统设置 → 隐私与安全性 → 屏幕录制"授权，授权后点击"开始"重试。若升级后仍然失败，请退出并重新启动 JaSub。";
+"error.screenCapture" = "JaSub 需要“屏幕录制”权限才能采集系统音频。请前往“系统设置 → 隐私与安全性 → 屏幕录制”授权，授权后点击“开始”重试。若升级后仍然失败，请退出并重新启动 JaSub。";
 "error.macOSVersion" = "JaSub 需要 macOS 26（Tahoe）或更高版本（当前：%@）。";
-"error.micPermissionDenied" = "JaSub 需要麦克风访问权限。请前往"系统设置 → 隐私与安全性 → 麦克风"开启后重试。";
-"error.micPermissionRestricted" = "麦克风访问被拒绝。请前往"系统设置 → 隐私与安全性 → 麦克风"允许 JaSub 后重试。";
+"error.micPermissionDenied" = "JaSub 需要麦克风访问权限。请前往“系统设置 → 隐私与安全性 → 麦克风”开启后重试。";
+"error.micPermissionRestricted" = "麦克风访问被拒绝。请前往“系统设置 → 隐私与安全性 → 麦克风”允许 JaSub 后重试。";
 "error.deviceSetFailed" = "无法设置音频输入设备（OSStatus %d）。请尝试选择其他设备。";
 "error.invalidInputFormat" = "所选设备不支持音频输入（sampleRate=%.0f channels=%d）。请选择其他输入设备。";
 "error.noConverter" = "无法创建音频格式转换器。请尝试选择其他输入设备。";
@@ -24,7 +24,7 @@
 "Translation Target" = "翻译目标";
 "Loading…" = "加载中…";
 "Language Pack Not Installed" = "未安装语言包";
-"hint.installTranslationPack" = "请前往"系统设置 → 通用 → 语言与地区 → 翻译语言"安装语言包。";
+"hint.installTranslationPack" = "请前往“系统设置 → 通用 → 语言与地区 → 翻译语言”安装语言包。";
 "Audio Source" = "音频来源";
 "Input Device" = "输入设备";
 "System Audio" = "系统音频";
@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "将翻译朗读到耳机";
 "Headphones detected" = "检测到耳机";
 "No headphones — silent" = "未检测到耳机 — 静音";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "允许手动滚动";
+"Show Translation" = "显示翻译";
+"Done" = "完成";
+"Voice" = "语音角色";
+"Automatic" = "自动";
+"Preview voice" = "试听声音";
+"Translation volume" = "翻译音量";
+"Use Custom Vocabulary" = "使用自定义词库";
+"Manage Vocabularies…" = "管理词库…";
+"Custom Vocabularies" = "自定义词库";
+"Vocabulary Name" = "词库名称";
+"Select or add a vocabulary." = "请选择或添加一个词库。";
+"Import…" = "导入…";
+"Export…" = "导出…";
+"Close" = "关闭";
+"vocab.newName" = "新词库";
+"vocab.nameWithLanguage" = "%@（%@）";
+"vocab.importLanguage" = "词汇的语言：";
+"vocab.example.travel" = "旅行";
+"vocab.example.shopping" = "购物";
+"vocab.example.medical" = "看病";
+"domain.migratedName" = "我的术语表";
+"domain.termCount" = "%d 个词（语音识别只采用前 %d 个）";
+"hint.vocabMenu" = "常用的人名、专有名词、术语放在这里，语音识别会更容易认出来。";
+"hint.vocab" = "按“开始”前，勾选“使用自定义词库”并选择一份词库。列表中的词会提示给语音识别，并用来校正原文中拼错的相近词；不在列表中的词不受影响。请放容易听错的人名、专有名词、术语，且要用讲者说的语言，常见词不需要加入。一行一个词，例如“Feshbach resonance”；加上“ = 译名”可同时指定翻译。导入／导出使用同样格式的纯文本文件。";
+"Check for Updates Automatically" = "自动检查更新";
+"Check Now" = "立即检查";
+"hint.updates" = "每天到 GitHub 检查一次是否有新版本，安装前会先询问。不会发送其他数据。";
+"Frequent" = "常用";
+"All" = "全部";
+"High Quality Translation" = "高质量翻译";
+"No network — using on-device translation" = "无网络——改用设备端翻译";
+"Requires network. Falls back to on-device if unavailable." = "需要网络；无法连接时改用设备端翻译。";

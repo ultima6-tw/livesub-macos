@@ -58,3 +58,38 @@
 "Speak Translation to Headphones" = "Lire la traduction au casque";
 "Headphones detected" = "Casque détecté";
 "No headphones — silent" = "Pas de casque — silencieux";
+
+/* Custom vocabulary, updates, and earlier gaps (2026-11-20) */
+"Allow Scrolling" = "Autoriser le défilement manuel";
+"Show Translation" = "Afficher la traduction";
+"Done" = "Terminé";
+"Voice" = "Voix";
+"Automatic" = "Automatique";
+"Preview voice" = "Écouter la voix";
+"Translation volume" = "Volume de la traduction";
+"Use Custom Vocabulary" = "Utiliser un vocabulaire personnalisé";
+"Manage Vocabularies…" = "Gérer les vocabulaires…";
+"Custom Vocabularies" = "Vocabulaires personnalisés";
+"Vocabulary Name" = "Nom du vocabulaire";
+"Select or add a vocabulary." = "Sélectionnez ou ajoutez un vocabulaire.";
+"Import…" = "Importer…";
+"Export…" = "Exporter…";
+"Close" = "Fermer";
+"vocab.newName" = "Nouveau vocabulaire";
+"vocab.nameWithLanguage" = "%@ (%@)";
+"vocab.importLanguage" = "Langue des mots :";
+"vocab.example.travel" = "Voyage";
+"vocab.example.shopping" = "Achats";
+"vocab.example.medical" = "Chez le médecin";
+"domain.migratedName" = "Mon glossaire";
+"domain.termCount" = "%d termes (seuls les %d premiers servent à la reconnaissance vocale)";
+"hint.vocabMenu" = "Ajoutez ici les noms, termes techniques et autres mots que vous entendez souvent pour que la reconnaissance vocale les repère mieux.";
+"hint.vocab" = "Avant « Démarrer », cochez « Utiliser un vocabulaire personnalisé » et choisissez une liste. Ses mots sont transmis à la reconnaissance vocale comme indices et servent à corriger les graphies approchantes dans la transcription ; les autres mots ne sont pas affectés. Ajoutez les noms, termes techniques et mots souvent mal reconnus, dans la langue parlée — inutile d'ajouter les mots courants. Un terme par ligne, ex. « Feshbach resonance » ; ajoutez « = traduction » pour imposer aussi la traduction. Importer/Exporter utilisent des fichiers texte au même format.";
+"Check for Updates Automatically" = "Rechercher les mises à jour automatiquement";
+"Check Now" = "Vérifier maintenant";
+"hint.updates" = "Vérifie une fois par jour sur GitHub si une nouvelle version existe et demande avant de l'installer. Aucune autre donnée n'est envoyée.";
+"Frequent" = "Fréquentes";
+"All" = "Toutes";
+"High Quality Translation" = "Traduction haute qualité";
+"No network — using on-device translation" = "Pas de réseau — traduction sur l'appareil";
+"Requires network. Falls back to on-device if unavailable." = "Nécessite le réseau. Bascule sur la traduction locale si indisponible.";
