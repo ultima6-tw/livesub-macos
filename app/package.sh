@@ -2,7 +2,8 @@
 # JaSub 打包腳本：Release build + 簽章 + 公證（notarize）+ DMG
 # 輸出：dist/JaSub-<version>.dmg
 # 需要 keychain 中已安裝「Developer ID Application」憑證，
-# 以及已用 `xcrun notarytool store-credentials "jasub-notarize" ...` 存好的認證設定檔
+# 以及已用 `xcrun notarytool store-credentials "jasub-notarize" ...` 存好的認證設定檔，
+# 以及 login keychain 中的 Sparkle EdDSA 私鑰（產生 appcast.xml 用，見步驟 8）
 
 set -e
 
@@ -64,10 +65,8 @@ find "$TMP_STAGE/$APP_NAME.app" -exec xattr -c {} \; 2>/dev/null || true
 xattr -d com.apple.FinderInfo "$TMP_STAGE/$APP_NAME.app" 2>/dev/null || true
 
 echo "▸ Signing $APP_NAME ($SIGN_IDENTITY)..."
-codesign -s "$SIGN_IDENTITY" --force --deep --options runtime --timestamp \
-    --entitlements "$(pwd)/Resources/JaSub.entitlements" \
-    "$TMP_STAGE/$APP_NAME.app"
-codesign --verify --deep --strict --verbose=2 "$TMP_STAGE/$APP_NAME.app"
+# 含 Sparkle 內嵌元件，不能用 --deep，細節見 sign_app.sh
+./sign_app.sh "$TMP_STAGE/$APP_NAME.app" "$SIGN_IDENTITY" --timestamp
 
 ln -sf /Applications "$TMP_STAGE/Applications"
 
@@ -124,11 +123,30 @@ rm -f "$DMG_PATH"
 cp "$TMP_DMG" "$DMG_PATH"
 rm -f "$TMP_DMG"
 
+# ─── 8. 產生 Sparkle 更新清單（appcast.xml）─────────────────────────────────
+# app 從 SUFeedURL（GitHub releases/latest/download/appcast.xml）讀這份清單。
+# generate_appcast 用 login keychain 裡的 Sparkle EdDSA 私鑰簽 DMG
+# （第一次會跳 keychain 存取詢問）；私鑰不在這台機器上會失敗。
+# 工具來自 SPM 下載的 Sparkle binary artifact。
+
+GENERATE_APPCAST="$DERIVED/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
+APPCAST_WORK=$(mktemp -d /tmp/jasub-appcast.XXXXXX)
+cp "$DMG_PATH" "$APPCAST_WORK/"
+echo "▸ Generating appcast.xml ..."
+"$GENERATE_APPCAST" \
+    --download-url-prefix "https://github.com/ultima6-tw/livesub-macos/releases/download/v$VERSION/" \
+    "$APPCAST_WORK"
+cp "$APPCAST_WORK/appcast.xml" "$DIST/appcast.xml"
+
 # ─── 完成 ────────────────────────────────────────────────────────────────────
 
 SIZE=$(du -sh "$DMG_PATH" | cut -f1)
 echo ""
 echo "✅  $DMG_PATH  ($SIZE) — signed & notarized"
+echo "✅  $DIST/appcast.xml"
+echo ""
+echo "發版：gh release create v$VERSION \"$DMG_PATH\" \"$DIST/appcast.xml\" ..."
+echo "      （appcast.xml 一定要一起上傳，舊版 app 才收得到更新）"
 echo ""
 echo "安裝方式："
 echo "  1. 開啟 DMG → 將 JaSub.app 拖入 Applications → 退出 DMG"

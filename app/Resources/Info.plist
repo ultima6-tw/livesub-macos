@@ -28,6 +28,10 @@
     </array>
     <key>LSUIElement</key>
     <true/>
+    <key>SUFeedURL</key>
+    <string>https://github.com/ultima6-tw/livesub-macos/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>m+XzPxJTQ24NdQ9ryLVcWYk2WRzLjJsyVtp8Sf+vDPw=</string>
     <key>CFBundleName</key>
     <string>JaSub</string>
     <key>CFBundleDisplayName</key>

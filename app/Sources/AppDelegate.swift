@@ -13,6 +13,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
+        // Start Sparkle at launch (scheduled checks run even if the popover is never opened)
+        _ = UpdaterManager.shared
+
         #if DEBUG
         DebugServer.shared.start()
         #endif
