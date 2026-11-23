@@ -18,6 +18,11 @@ NOTARY_PROFILE="jasub-notarize"
 
 # ─── 1. Release build ─────────────────────────────────────────────────────────
 
+# project.yml is the source of truth (version, files, packages); regenerate
+# the .xcodeproj so a version bump there can't ship with stale settings.
+echo "▸ Regenerating Xcode project (xcodegen)..."
+xcodegen generate > /dev/null
+
 echo "▸ Building $APP_NAME (Release)..."
 
 # iCloud 同步資料夾的檔案帶有 extended attributes，

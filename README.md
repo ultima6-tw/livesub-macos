@@ -6,26 +6,22 @@ Real-time speech transcription and translation for macOS 26.4+. No API keys, no 
 
 Uses Apple's native stack exclusively:
 
-- **ASR**: SpeechAnalyzer + SpeechTranscriber (Speech.framework, macOS 26+)
+- **ASR**: SpeechAnalyzer + SpeechTranscriber (Speech.framework, macOS 26+); DictationTranscriber with contextual strings when a custom vocabulary is in use
 - **Translation**: Translation.framework `.highFidelity` (Apple servers, optional) or `.lowLatency` (on-device, < 100ms, default) → FoundationModels / Apple Intelligence (fallback, ~500ms)
 - **System audio**: CATapDescription + IOProc — captures browser or any app audio without a virtual audio driver
 
 ## Download
 
-**[→ JaSub 0.3.9 (DMG)](https://github.com/ultima6-tw/livesub-macos/releases/latest)**
+**[→ Download the latest JaSub (DMG)](https://github.com/ultima6-tw/livesub-macos/releases/latest)**
 
 > Requires macOS 26.4+ (Tahoe) + Apple Intelligence + Apple Silicon.  
-> First launch: right-click the app → **Open** to bypass Gatekeeper.
+> Signed with Developer ID and notarised by Apple — opens without Gatekeeper warnings.
 
-### Upgrading from a previous version
+### Updating
 
-When replacing an existing installation, TCC (privacy permissions) must be reset manually — the ad-hoc signature changes with each build, and macOS does not transfer permissions automatically.
+From 0.3.13 on, JaSub checks GitHub for a new version once a day and asks before installing (Sparkle; turn off with **Check for Updates Automatically** in the menu, or use **Check Now**). To get 0.3.13 from an older version, download the DMG once and drag JaSub into Applications to replace it.
 
-1. Open **System Settings → Privacy & Security → Screen Recording** → remove JaSub
-2. Open **System Settings → Privacy & Security → Microphone** → remove JaSub
-3. Drag the new version into Applications (overwrite)
-4. Launch JaSub — macOS will prompt for permissions again → grant them
-5. **Quit and relaunch JaSub** — TCC changes don't take effect in the same process session
+> Upgrading from **0.3.8 or earlier** (ad-hoc signed builds): first remove JaSub from **System Settings → Privacy & Security → Screen Recording** and **Microphone**, then install, launch, grant permissions again, and relaunch once. Releases signed with the same Developer ID keep their permissions.
 
 ![JaSub subtitle overlay windows](app/docs/screenshot-overview.png)
 
@@ -53,10 +49,10 @@ Install the language pairs you need (e.g. English ↔ Chinese, Japanese ↔ Chin
 ```bash
 cd app
 ./setup.sh        # install xcodegen and generate .xcodeproj (first time only)
-./package.sh      # Release build → dist/JaSub-0.3.9.dmg
+./package.sh      # Release build → sign → notarise → dist/JaSub-<version>.dmg + dist/appcast.xml
 ```
 
-Open the DMG, drag JaSub to Applications, then right-click → **Open** on first launch (bypasses Gatekeeper — the app is ad-hoc signed, not notarised).
+`package.sh` needs a Developer ID Application certificate, a `notarytool` keychain profile and the Sparkle EdDSA private key (see the header of the script). To build for yourself without these, open `JaSub.xcodeproj` in Xcode and sign with your own team.
 
 ### Usage
 
@@ -80,6 +76,9 @@ Open the DMG, drag JaSub to Applications, then right-click → **Open** on first
 | Audio source | Microphone (CoreAudio device list) or Browser / System Audio (CATapDescription + IOProc) |
 | Font size | 12–40pt stepper, persisted across launches — subtitle windows are freely resizable |
 | Show original | Toggle original-language subtitle window |
+| Custom vocabulary | Optional word lists (names, jargon, drug names…) given to speech recognition as hints and used to correct near-miss spellings; add `term = translation` to force a translation. Manage, reorder, import/export as plain text; example lists included |
+| Speak translation to headphones | Reads each translated sentence aloud — headphones only; selectable voice per target language and a translation-volume slider |
+| Automatic updates | Daily check on GitHub (Sparkle 2, EdDSA-signed), asks before installing; can be turned off |
 | Session log | Auto-creates `~/Documents/JaSub/YYYY-MM-DD HH-mm.txt` on start, appends each sentence in real time |
 | Log folder | Opens `~/Documents/JaSub` in Finder |
 
@@ -93,19 +92,9 @@ The UI adapts to the system language automatically. Supported languages:
 
 English · 繁體中文 · 简体中文 · 日本語 · 한국어 · Français · Deutsch · Español · Português (BR) · Italiano · العربية · Русский · Nederlands · Polski · ภาษาไทย · Türkçe · Українська · Tiếng Việt · Bahasa Indonesia
 
-### Upgrading from a previous version
+### Upgrading
 
-Because JaSub is ad-hoc signed, macOS treats each new binary as a different app and revokes the old permissions. Follow these steps to avoid "Screen Recording denied" errors after upgrading:
-
-1. **Remove old permissions** — System Settings → Privacy & Security:
-   - Screen Recording → select JaSub → click **–** to remove
-   - Microphone → select JaSub → click **–** to remove
-2. **Install the new version** — drag the new `JaSub.app` into Applications (overwrite)
-3. **Launch JaSub** — macOS will ask for Screen Recording and Microphone access again → grant both
-4. **Relaunch when prompted** — macOS will say the app needs to be restarted for the permission to take effect → quit JaSub completely and reopen it
-5. JaSub should now work normally
-
-> **Why this is needed**: TCC (macOS's permission database) records permissions by binary path + code signature. An ad-hoc re-signed binary is treated as a new app, so the old entry must be removed before macOS will prompt again.
+See [Updating](#updating) above.
 
 ### Permissions
 
